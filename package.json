@@ -9,10 +9,10 @@
     "npm": "8.2.0"
   },
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "heroku-postbuild":"cd client && npm install && npm run build"
   },
-  "author": "",
+  "author": "diana benavides",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
