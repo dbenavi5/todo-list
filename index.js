@@ -88,7 +88,7 @@ app.delete("/todos/:id", async (request, response) => {
 
 // catch all method
 app.get("*", (request, response) => {
-  response.sendFile(path.join(__dirname, "client/build/index.html"))
+  response.status(200).sendFile(path.join(__dirname, "client/build/index.html"))
 })
 
 app.listen(PORT, () => {
