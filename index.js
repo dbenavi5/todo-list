@@ -1,14 +1,25 @@
+import pool from "./connection/dbConnection.js";
 import express from "express";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from 'url';
 
-import pool from "./connection/dbConnection.js";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const PORT = process.env.PORT || 8000;
 
 const app = express();
-const PORT = 8000;
-
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // => allows access to the req.body
+
+
+app.use(express.static(path.join('./client/build')))
+if (process.env.NODE_ENV === "production") {
+  // serve static content
+  // npm run build
+  app.use(express.static(path.join(__dirname, "client/build")));
+}
 
 // ROUTES
 app.post("/todos", async (request, response) => {
@@ -53,25 +64,25 @@ app.put("/todos/:id", async (request, response) => {
     const { id } = request.params;
     const { description } = request.body;
 
-    await pool.query(
-      "UPDATE todo SET description = $1 WHERE todo_id = $2",
-      [description, id]
-    );
-    response.json('Todo was updated');
+    await pool.query("UPDATE todo SET description = $1 WHERE todo_id = $2", [
+      description,
+      id,
+    ]);
+    response.json("Todo was updated");
   } catch (error) {
     console.log(error);
   }
 });
 
-app.delete('/todos/:id', async (request, response) => {
+app.delete("/todos/:id", async (request, response) => {
   try {
     const { id } = request.params;
     await pool.query("DELETE FROM todo WHERE todo_id = $1", [id]);
-    response.json('Todo was deleted');
+    response.json("Todo was deleted");
   } catch (error) {
     console.log(error);
   }
-})
+});
 
 app.listen(PORT, () => {
   console.log(`server is listening  http://localhost:${PORT}`);
