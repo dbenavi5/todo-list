@@ -17,10 +17,10 @@ const ListTodos = () => {
 
   const deleteItem = async (id) => {
     try {
-      await fetch(`/todos/${id}`, {
+      const deleteTodo = await fetch(`/todos/${id}`, {
         method: "DELETE",
       });
-
+      console.log(deleteTodo);
       setTodos(todos.filter((todo) => todo.todo_id !== id));
     } catch (error) {
       console.log(error);

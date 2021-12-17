@@ -7,12 +7,12 @@ const InputTodo = () => {
     e.preventDefault();
     try {
       const body = { description };
-      await fetch("/todos", {
+      const res = await fetch("/todos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-
+      console.log(res);
       window.location = "/";
     } catch (error) {
       console.log(error);

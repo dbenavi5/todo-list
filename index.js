@@ -64,10 +64,11 @@ app.put("/todos/:id", async (request, response) => {
     const { id } = request.params;
     const { description } = request.body;
 
-    await pool.query("UPDATE todo SET description = $1 WHERE todo_id = $2", [
+    const updateList = await pool.query("UPDATE todo SET description = $1 WHERE todo_id = $2", [
       description,
       id,
     ]);
+    console.log(updateList);
     response.json("Todo was updated");
   } catch (error) {
     console.log(error);
@@ -77,7 +78,8 @@ app.put("/todos/:id", async (request, response) => {
 app.delete("/todos/:id", async (request, response) => {
   try {
     const { id } = request.params;
-    await pool.query("DELETE FROM todo WHERE todo_id = $1", [id]);
+    const deleteItem = await pool.query("DELETE FROM todo WHERE todo_id = $1", [id]);
+    console.log(deleteItem);
     response.json("Todo was deleted");
   } catch (error) {
     console.log(error);

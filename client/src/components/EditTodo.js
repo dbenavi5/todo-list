@@ -7,11 +7,12 @@ const EditTodo = ({ todo }) => {
     e.preventDefault();
     try {
       const body = { description };
-      await fetch(`/todos/${todo.todo_id}`, {
+      const updateTodo  = await fetch(`/todos/${todo.todo_id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+      console.log(updateTodo);
       window.location = "/";
     } catch (error) {
       console.log(error.message);
