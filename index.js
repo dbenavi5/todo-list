@@ -84,6 +84,11 @@ app.delete("/todos/:id", async (request, response) => {
   }
 });
 
+// catch all method
+app.get("*", (request, response) => {
+  response.sendFile(path.join(__dirname, "client/build/index.html"))
+})
+
 app.listen(PORT, () => {
   console.log(`server is listening  http://localhost:${PORT}`);
 });
