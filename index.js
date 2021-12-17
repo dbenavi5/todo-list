@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json()); // => allows access to the req.body
 
 
-app.use(express.static(path.join('./client/build')))
+// app.use(express.static(path.join('./client/build')))
 if (process.env.NODE_ENV === "production") {
   // serve static content
   // npm run build

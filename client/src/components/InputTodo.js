@@ -20,7 +20,7 @@ const InputTodo = () => {
   };
   return (
     <Fragment>
-      <h1 className="textt-center mt-5">Input Todo</h1>
+      <h1 className="text-center mt-5">Input Todo</h1>
       <form className="d-flex mt-5" onSubmit={onSubmitForm}>
         <input
           type="text"
