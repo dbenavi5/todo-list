@@ -19,7 +19,8 @@
     "dotenv": "^10.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "nodemon": "^2.0.15"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
