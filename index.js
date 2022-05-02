@@ -4,6 +4,8 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from 'url';
 
+import authRouter from './routes/jwtAuth.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 8000;
@@ -22,6 +24,9 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // ROUTES
+// register and login routes
+app.use("/auth", authRouter);
+
 app.post("/todos", async (request, response) => {
   // await
   try {
