@@ -9,7 +9,7 @@ const authorization = async (request, response, next) => {
       return response.status(403).json("Not Authorize");
     }
 
-    const payload = jwt.verify(jwtToken, process.envJWTSECRET);
+    const payload = jwt.verify(jwtToken, process.env.JWTSECRET);
     request.user = payload.user;
     next();
   } catch (error) {

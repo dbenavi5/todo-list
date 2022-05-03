@@ -1,10 +1,12 @@
-import pool from "./connection/dbConnection.js";
+// import pool from "./connection/dbConnection.js";
 import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from 'url';
 
 import authRouter from './routes/jwtAuth.js';
+import todoRouter from './routes/todoRoutes.js';
+import dashboardRouter from './routes/dashboard.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,72 +26,9 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // ROUTES
-// register and login routes
 app.use("/auth", authRouter);
-
-app.post("/todos", async (request, response) => {
-  // await
-  try {
-    const { description } = request.body;
-    const newTodo = await pool.query(
-      "INSERT INTO todo (description) VALUES ($1) RETURNING *",
-      [description]
-    );
-
-    response.json(newTodo.rows[0]);
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-app.get("/todos", async (request, response) => {
-  // await
-  try {
-    const allTodos = await pool.query("SELECT * FROM todo");
-    response.json(allTodos.rows);
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-app.get("/todos/:id", async (request, response) => {
-  try {
-    const { id } = request.params;
-    const todo = await pool.query("SELECT * FROM todo WHERE todo_id = $1", [
-      id,
-    ]);
-    response.json(todo.rows[0]);
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-app.put("/todos/:id", async (request, response) => {
-  try {
-    const { id } = request.params;
-    const { description } = request.body;
-
-    await pool.query("UPDATE todo SET description = $1 WHERE todo_id = $2", [
-      description,
-      id,
-    ]);
-
-    response.json("Todo was updated");
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-app.delete("/todos/:id", async (request, response) => {
-  try {
-    const { id } = request.params;
-    await pool.query("DELETE FROM todo WHERE todo_id = $1", [id]);
-    
-    response.json("Todo was deleted");
-  } catch (error) {
-    console.log(error);
-  }
-});
+app.use("/todos", todoRouter);
+app.use("/dashboard", dashboardRouter);
 
 // catch all method
 app.get("*", (request, response) => {
