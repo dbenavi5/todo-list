@@ -13,7 +13,7 @@ const EditTodo = ({ todo }) => {
         body: JSON.stringify(body),
       });
       console.log(updateTodo);
-      window.location = "/";
+      window.location = "/dashboard";
     } catch (error) {
       console.log(error.message);
     }
